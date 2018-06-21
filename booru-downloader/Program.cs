@@ -13,8 +13,11 @@ namespace booru_downloader {
             Application.SetCompatibleTextRenderingDefault(false);
 
             Application.Run(
-                new Dialog( new string [] { "All", "danbooru", "konachan", "yande.re" } )
-            );
+                new Dialog( new DisplaySource[] {
+                    new DisplaySource("Danbooru", BooruAPI.Source.Danbooru),
+                    new DisplaySource("Konachan", BooruAPI.Source.Konachan),
+                    new DisplaySource("Yande.re", BooruAPI.Source.Yandere)
+                } ));
         }
     }
 }

@@ -38,6 +38,9 @@
             this.checkCreateSubfolder = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.comboSource = new System.Windows.Forms.ComboBox();
+            this.labelError = new System.Windows.Forms.Label();
+            this.labelProgress = new System.Windows.Forms.Label();
+            this.labelStatus = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSequenceStart)).BeginInit();
@@ -243,7 +246,7 @@
             // 
             this.progressBar.Location = new System.Drawing.Point(22, 344);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(482, 23);
+            this.progressBar.Size = new System.Drawing.Size(374, 23);
             this.progressBar.TabIndex = 7;
             // 
             // buttonStart
@@ -296,11 +299,40 @@
             this.comboSource.Size = new System.Drawing.Size(121, 21);
             this.comboSource.TabIndex = 12;
             // 
+            // labelError
+            // 
+            this.labelError.AutoSize = true;
+            this.labelError.ForeColor = System.Drawing.Color.Red;
+            this.labelError.Location = new System.Drawing.Point(19, 373);
+            this.labelError.Name = "labelError";
+            this.labelError.Size = new System.Drawing.Size(0, 13);
+            this.labelError.TabIndex = 13;
+            // 
+            // labelProgress
+            // 
+            this.labelProgress.AutoSize = true;
+            this.labelProgress.Location = new System.Drawing.Point(402, 349);
+            this.labelProgress.Name = "labelProgress";
+            this.labelProgress.Size = new System.Drawing.Size(30, 13);
+            this.labelProgress.TabIndex = 14;
+            this.labelProgress.Text = "0 / 0";
+            // 
+            // labelStatus
+            // 
+            this.labelStatus.AutoSize = true;
+            this.labelStatus.Location = new System.Drawing.Point(19, 373);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(0, 13);
+            this.labelStatus.TabIndex = 15;
+            // 
             // Dialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(514, 401);
+            this.Controls.Add(this.labelStatus);
+            this.Controls.Add(this.labelProgress);
+            this.Controls.Add(this.labelError);
             this.Controls.Add(this.comboSource);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkCreateSubfolder);
@@ -355,6 +387,9 @@
         private System.Windows.Forms.CheckBox checkCreateSubfolder;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox comboSource;
+        private System.Windows.Forms.Label labelError;
+        private System.Windows.Forms.Label labelProgress;
+        private System.Windows.Forms.Label labelStatus;
     }
 }
 
