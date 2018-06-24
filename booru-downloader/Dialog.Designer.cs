@@ -14,35 +14,34 @@
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Dialog));
             this.textTags = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.labelSearchTags = new System.Windows.Forms.Label();
+            this.groupRating = new System.Windows.Forms.GroupBox();
             this.radioAny = new System.Windows.Forms.RadioButton();
             this.radioQuestionableExplicit = new System.Windows.Forms.RadioButton();
             this.radioSafeQuestionable = new System.Windows.Forms.RadioButton();
             this.radioExplicit = new System.Windows.Forms.RadioButton();
             this.radioQuestionable = new System.Windows.Forms.RadioButton();
             this.radioSafe = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupSaveFormat = new System.Windows.Forms.GroupBox();
             this.numericSequenceStart = new System.Windows.Forms.NumericUpDown();
-            this.checkSaveMetadata = new System.Windows.Forms.CheckBox();
             this.labelStartAt = new System.Windows.Forms.Label();
             this.radioSequence = new System.Windows.Forms.RadioButton();
             this.radioID = new System.Windows.Forms.RadioButton();
             this.radioMD5 = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelOutputFolder = new System.Windows.Forms.Label();
             this.textOutputFolder = new System.Windows.Forms.TextBox();
             this.buttonBrowseOutput = new System.Windows.Forms.Button();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.buttonStart = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
             this.checkCreateSubfolder = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelSource = new System.Windows.Forms.Label();
             this.comboSource = new System.Windows.Forms.ComboBox();
             this.labelError = new System.Windows.Forms.Label();
             this.labelProgress = new System.Windows.Forms.Label();
             this.labelStatus = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupRating.SuspendLayout();
+            this.groupSaveFormat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSequenceStart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,29 +53,29 @@
             this.textTags.Size = new System.Drawing.Size(240, 120);
             this.textTags.TabIndex = 0;
             // 
-            // label1
+            // labelSearchTags
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Search tags";
+            this.labelSearchTags.AutoSize = true;
+            this.labelSearchTags.Location = new System.Drawing.Point(12, 9);
+            this.labelSearchTags.Name = "labelSearchTags";
+            this.labelSearchTags.Size = new System.Drawing.Size(64, 13);
+            this.labelSearchTags.TabIndex = 1;
+            this.labelSearchTags.Text = "Search tags";
             // 
-            // groupBox1
+            // groupRating
             // 
-            this.groupBox1.Controls.Add(this.radioAny);
-            this.groupBox1.Controls.Add(this.radioQuestionableExplicit);
-            this.groupBox1.Controls.Add(this.radioSafeQuestionable);
-            this.groupBox1.Controls.Add(this.radioExplicit);
-            this.groupBox1.Controls.Add(this.radioQuestionable);
-            this.groupBox1.Controls.Add(this.radioSafe);
-            this.groupBox1.Location = new System.Drawing.Point(261, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(240, 133);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Rating";
+            this.groupRating.Controls.Add(this.radioAny);
+            this.groupRating.Controls.Add(this.radioQuestionableExplicit);
+            this.groupRating.Controls.Add(this.radioSafeQuestionable);
+            this.groupRating.Controls.Add(this.radioExplicit);
+            this.groupRating.Controls.Add(this.radioQuestionable);
+            this.groupRating.Controls.Add(this.radioSafe);
+            this.groupRating.Location = new System.Drawing.Point(261, 12);
+            this.groupRating.Name = "groupRating";
+            this.groupRating.Size = new System.Drawing.Size(240, 133);
+            this.groupRating.TabIndex = 2;
+            this.groupRating.TabStop = false;
+            this.groupRating.Text = "Rating";
             // 
             // radioAny
             // 
@@ -140,40 +139,32 @@
             this.radioSafe.Text = "Safe";
             this.radioSafe.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // groupSaveFormat
             // 
-            this.groupBox2.Controls.Add(this.numericSequenceStart);
-            this.groupBox2.Controls.Add(this.checkSaveMetadata);
-            this.groupBox2.Controls.Add(this.labelStartAt);
-            this.groupBox2.Controls.Add(this.radioSequence);
-            this.groupBox2.Controls.Add(this.radioID);
-            this.groupBox2.Controls.Add(this.radioMD5);
-            this.groupBox2.Location = new System.Drawing.Point(15, 151);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(486, 100);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Save format";
+            this.groupSaveFormat.Controls.Add(this.numericSequenceStart);
+            this.groupSaveFormat.Controls.Add(this.labelStartAt);
+            this.groupSaveFormat.Controls.Add(this.radioSequence);
+            this.groupSaveFormat.Controls.Add(this.radioID);
+            this.groupSaveFormat.Controls.Add(this.radioMD5);
+            this.groupSaveFormat.Location = new System.Drawing.Point(15, 151);
+            this.groupSaveFormat.Name = "groupSaveFormat";
+            this.groupSaveFormat.Size = new System.Drawing.Size(486, 100);
+            this.groupSaveFormat.TabIndex = 3;
+            this.groupSaveFormat.TabStop = false;
+            this.groupSaveFormat.Text = "Save format";
             // 
             // numericSequenceStart
             // 
             this.numericSequenceStart.Enabled = false;
             this.numericSequenceStart.Location = new System.Drawing.Point(290, 68);
+            this.numericSequenceStart.Maximum = new decimal(new int[] {
+            -2147483648,
+            0,
+            0,
+            0});
             this.numericSequenceStart.Name = "numericSequenceStart";
             this.numericSequenceStart.Size = new System.Drawing.Size(120, 20);
             this.numericSequenceStart.TabIndex = 5;
-            // 
-            // checkSaveMetadata
-            // 
-            this.checkSaveMetadata.AutoSize = true;
-            this.checkSaveMetadata.Checked = true;
-            this.checkSaveMetadata.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkSaveMetadata.Location = new System.Drawing.Point(252, 19);
-            this.checkSaveMetadata.Name = "checkSaveMetadata";
-            this.checkSaveMetadata.Size = new System.Drawing.Size(98, 17);
-            this.checkSaveMetadata.TabIndex = 4;
-            this.checkSaveMetadata.Text = "Save metadata";
-            this.checkSaveMetadata.UseVisualStyleBackColor = true;
             // 
             // labelStartAt
             // 
@@ -217,14 +208,14 @@
             this.radioMD5.Text = "Original MD5";
             this.radioMD5.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // labelOutputFolder
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 321);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Output folder";
+            this.labelOutputFolder.AutoSize = true;
+            this.labelOutputFolder.Location = new System.Drawing.Point(19, 321);
+            this.labelOutputFolder.Name = "labelOutputFolder";
+            this.labelOutputFolder.Size = new System.Drawing.Size(68, 13);
+            this.labelOutputFolder.TabIndex = 4;
+            this.labelOutputFolder.Text = "Output folder";
             // 
             // textOutputFolder
             // 
@@ -281,14 +272,14 @@
             this.checkCreateSubfolder.Text = "Create subfolder";
             this.checkCreateSubfolder.UseVisualStyleBackColor = true;
             // 
-            // label4
+            // labelSource
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(19, 260);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 13);
-            this.label4.TabIndex = 11;
-            this.label4.Text = "Source";
+            this.labelSource.AutoSize = true;
+            this.labelSource.Location = new System.Drawing.Point(19, 260);
+            this.labelSource.Name = "labelSource";
+            this.labelSource.Size = new System.Drawing.Size(41, 13);
+            this.labelSource.TabIndex = 11;
+            this.labelSource.Text = "Source";
             // 
             // comboSource
             // 
@@ -334,26 +325,26 @@
             this.Controls.Add(this.labelProgress);
             this.Controls.Add(this.labelError);
             this.Controls.Add(this.comboSource);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelSource);
             this.Controls.Add(this.checkCreateSubfolder);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.buttonBrowseOutput);
             this.Controls.Add(this.textOutputFolder);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelOutputFolder);
+            this.Controls.Add(this.groupSaveFormat);
+            this.Controls.Add(this.groupRating);
+            this.Controls.Add(this.labelSearchTags);
             this.Controls.Add(this.textTags);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Dialog";
             this.Text = "booru-downloader";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupRating.ResumeLayout(false);
+            this.groupRating.PerformLayout();
+            this.groupSaveFormat.ResumeLayout(false);
+            this.groupSaveFormat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSequenceStart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -363,29 +354,28 @@
         #endregion
 
         private System.Windows.Forms.TextBox textTags;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label labelSearchTags;
+        private System.Windows.Forms.GroupBox groupRating;
         private System.Windows.Forms.RadioButton radioAny;
         private System.Windows.Forms.RadioButton radioQuestionableExplicit;
         private System.Windows.Forms.RadioButton radioSafeQuestionable;
         private System.Windows.Forms.RadioButton radioExplicit;
         private System.Windows.Forms.RadioButton radioQuestionable;
         private System.Windows.Forms.RadioButton radioSafe;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox groupSaveFormat;
         private System.Windows.Forms.NumericUpDown numericSequenceStart;
-        private System.Windows.Forms.CheckBox checkSaveMetadata;
         private System.Windows.Forms.Label labelStartAt;
         private System.Windows.Forms.RadioButton radioSequence;
         private System.Windows.Forms.RadioButton radioID;
         private System.Windows.Forms.RadioButton radioMD5;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelOutputFolder;
         private System.Windows.Forms.TextBox textOutputFolder;
         private System.Windows.Forms.Button buttonBrowseOutput;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Button buttonStart;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.CheckBox checkCreateSubfolder;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelSource;
         private System.Windows.Forms.ComboBox comboSource;
         private System.Windows.Forms.Label labelError;
         private System.Windows.Forms.Label labelProgress;
