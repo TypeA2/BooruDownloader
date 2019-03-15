@@ -62,18 +62,6 @@ namespace BooruDownloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public ulong StartID {
-            get {
-                return ((ulong)(this["StartID"]));
-            }
-            set {
-                this["StartID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public ulong StartSequence {
             get {
                 return ((ulong)(this["StartSequence"]));
@@ -134,6 +122,18 @@ namespace BooruDownloader.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DanbooruUsername {
+            get {
+                return ((string)(this["DanbooruUsername"]));
+            }
+            set {
+                this["DanbooruUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string DanbooruKey {
             get {
                 return ((string)(this["DanbooruKey"]));
@@ -145,25 +145,61 @@ namespace BooruDownloader.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string YandereKey {
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong DanbooruID {
             get {
-                return ((string)(this["YandereKey"]));
+                return ((ulong)(this["DanbooruID"]));
             }
             set {
-                this["YandereKey"] = value;
+                this["DanbooruID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public ulong DanbooruAccountLevel {
+            get {
+                return ((ulong)(this["DanbooruAccountLevel"]));
+            }
+            set {
+                this["DanbooruAccountLevel"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KonachanKey {
+        public string DanbooruCredentialsHash {
             get {
-                return ((string)(this["KonachanKey"]));
+                return ((string)(this["DanbooruCredentialsHash"]));
             }
             set {
-                this["KonachanKey"] = value;
+                this["DanbooruCredentialsHash"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CreateSubfolder {
+            get {
+                return ((bool)(this["CreateSubfolder"]));
+            }
+            set {
+                this["CreateSubfolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool FormatTags {
+            get {
+                return ((bool)(this["FormatTags"]));
+            }
+            set {
+                this["FormatTags"] = value;
             }
         }
     }

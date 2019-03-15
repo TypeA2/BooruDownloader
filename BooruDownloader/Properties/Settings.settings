@@ -11,9 +11,6 @@
     <Setting Name="CurrentFormat" Type="System.String" Scope="User">
       <Value Profile="(Default)">MD5</Value>
     </Setting>
-    <Setting Name="StartID" Type="System.UInt64" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="StartSequence" Type="System.UInt64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
@@ -29,14 +26,26 @@
     <Setting Name="UseAPI" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DanbooruUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="DanbooruKey" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="YandereKey" Type="System.String" Scope="User">
+    <Setting Name="DanbooruID" Type="System.UInt64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DanbooruAccountLevel" Type="System.UInt64" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DanbooruCredentialsHash" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="KonachanKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="CreateSubfolder" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FormatTags" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
