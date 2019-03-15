@@ -28,6 +28,8 @@ namespace BooruDownloader {
             this.LoadAllSettings();
 
             this.AttachEventHandlers();
+
+            DoUpdateTagsState();
         }
 
         private void AdditionalComponentSetup(out Brush default_border) {
