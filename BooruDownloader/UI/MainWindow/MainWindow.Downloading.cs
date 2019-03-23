@@ -47,10 +47,19 @@ namespace BooruDownloader {
                 ResetView("Download canceled");
                 return;
             }
-            if (!(await current_board.GetPages(best_tags, tags, 
-                CurrentRating(), -1, this) is List<Post> posts)) {
 
-                ResetView("Download canceled");
+            List<Post> posts;
+            try {
+                posts = await current_board.GetPages(best_tags, tags,
+                    CurrentRating(), -1, this) as List<Post>;
+
+                if (posts == null) {
+
+                    ResetView("Download canceled");
+                    return;
+                }
+            } catch (WebException e) {
+                DownloadFailed(e.Message);
                 return;
             }
 
