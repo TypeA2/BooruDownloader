@@ -51,7 +51,6 @@ namespace BooruDownloader {
         }
 
         public static async Task<string> GetTextAsync(HttpWebRequest request) {
-            Console.WriteLine(request.RequestUri);
             return await Client.DownloadStringTaskAsync(request.RequestUri);
         }
 
