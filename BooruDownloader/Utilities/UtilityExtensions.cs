@@ -48,7 +48,7 @@ namespace BooruDownloader {
         public static string CleanPath(this string path, char fill = '_') =>
             new Regex(@"(.)\\1+")
                 .Replace(Path.GetInvalidPathChars()
-                    .Concat((new[] { '\\', '/', '*', '?', '|', '<', '>' }))
+                    .Concat((new[] { '\\', '/', '*', '?', '|', '<', '>', ':' }))
                     .Aggregate(path, (current, c) => current.Replace(c, fill)), "$1");
 
         public static string BytesString(this long size) {
