@@ -60,7 +60,7 @@ namespace BooruDownloader {
             [JsonProperty("post_upload_count")]
             public ulong PostUploadCount { get; set; }
 
-            [JsonProperty("PostUpdateCount")]
+            [JsonProperty("post_update_coun")]
             public ulong PostUpdateCount { get; set; }
 
             [JsonProperty("note_update_count")]
