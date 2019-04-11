@@ -48,7 +48,7 @@ namespace BooruDownloader {
             [JsonProperty("name")]
             public string Name { get; set; }
 
-            [JsonProperty("inviter_id")]
+            [JsonProperty("inviter_id", Required = Required.AllowNull)]
             public ulong InviterID { get; set; }
 
             [JsonProperty("level")]
