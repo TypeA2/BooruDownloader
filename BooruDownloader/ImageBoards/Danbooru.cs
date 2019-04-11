@@ -49,7 +49,7 @@ namespace BooruDownloader {
             public string Name { get; set; }
 
             [JsonProperty("inviter_id", Required = Required.AllowNull)]
-            public ulong InviterID { get; set; }
+            public ulong? InviterID { get; set; }
 
             [JsonProperty("level")]
             public UserLevel Level { get; set; }
@@ -60,7 +60,7 @@ namespace BooruDownloader {
             [JsonProperty("post_upload_count")]
             public ulong PostUploadCount { get; set; }
 
-            [JsonProperty("post_update_coun")]
+            [JsonProperty("post_update_count")]
             public ulong PostUpdateCount { get; set; }
 
             [JsonProperty("note_update_count")]
