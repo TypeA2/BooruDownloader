@@ -9,7 +9,7 @@
       <Value Profile="(Default)">Any</Value>
     </Setting>
     <Setting Name="CurrentFormat" Type="System.String" Scope="User">
-      <Value Profile="(Default)">MD5</Value>
+      <Value Profile="(Default)">TaggedFilename</Value>
     </Setting>
     <Setting Name="StartSequence" Type="System.UInt64" Scope="User">
       <Value Profile="(Default)">0</Value>
