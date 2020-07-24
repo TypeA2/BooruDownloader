@@ -120,15 +120,17 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="27"/>
-                    <RowDefinition Height="26*"/>
-                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="20*"/>
                 </Grid.RowDefinitions>
                 <RadioButton Checked="RadioFormat_OnClick" x:Name="RadioMD5" Grid.Row="0" Grid.Column="0" Content="Original MD5" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <RadioButton Checked="RadioFormat_OnClick" x:Name="RadioID" Grid.Row="1" Grid.Column="0" Content="ID" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <RadioButton Checked="RadioFormat_OnClick" x:Name="RadioSequence" Grid.Row="2" Grid.Column="0" Content="Number sequence" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                <RadioButton Checked="RadioFormat_OnClick" x:Name="RadioTaggedFilename" Grid.Row="3" Grid.Column="0" Content="Tagged filename" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                 <Label Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="10,0,0,0" Content="Start at" VerticalAlignment="Center" Height="25"/>
-                <TextBox KeyDown="NumericTextFieldKeypress" x:Name="StartSequence" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="22" Margin="71,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Center"/>
+                <TextBox KeyDown="NumericTextFieldKeypress" x:Name="StartSequence" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="20" Margin="71,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" VerticalContentAlignment="Center"/>
                 <CheckBox x:Name="OverwriteExisting" Grid.Row="0" Grid.Column="1" Content="Overwrite existing" HorizontalAlignment="Left" Margin="71,0,0,0" VerticalAlignment="Center"
                           IsChecked="{Binding Mode=TwoWay, Source={x:Static properties:Settings.Default}, Path=OverwriteExisting}"/>
             </Grid>

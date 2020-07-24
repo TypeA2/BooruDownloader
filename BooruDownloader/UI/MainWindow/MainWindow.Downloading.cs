@@ -34,7 +34,7 @@ namespace BooruDownloader {
 
             List<ImageTag> tags = ImageTag.ParseTags(Tags.Text) as List<ImageTag>;
 
-            TaggedImageBoard current_board = AvailableImageBoards[this.Source.SelectedIndex];
+            TaggedImageBoard current_board = AvailableImageBoards[Source.SelectedIndex];
 
             ImageTag rating_tag = Post.RatingTag(CurrentRating());
 
@@ -127,6 +127,8 @@ namespace BooruDownloader {
                     output_file = $"{post.MD5}.{file_ext}";
                 } else if (RadioSequence.IsChecked == true) {
                     output_file = $"{sequence_start + i}.{file_ext}";
+                } else if (RadioTaggedFilename.IsChecked == true) {
+                    output_file = $"{post.TaggedFileString()}.{file_ext}";
                 }
 
                 if (output_file.Length == 0) {
@@ -135,6 +137,9 @@ namespace BooruDownloader {
                     
                     throw new InvalidInputException($"Output path could not be formatted for {post.ID} from {post.Board}");
                 }
+
+                // Okay resharper is just showing off
+                output_file = Path.GetInvalidFileNameChars().Aggregate(output_file, (current, c) => current.Replace(c, '_'));
 
                 string output_path = $"{output_base}{Path.DirectorySeparatorChar}{output_file}";
 

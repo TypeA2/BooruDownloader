@@ -74,40 +74,39 @@ namespace BooruDownloader {
         }
 
         private void RadioFormat_OnClick(object sender, RoutedEventArgs e) {
-            this.StartSequence.IsEnabled = ((RadioButton) sender).Name == "RadioSequence";
+            StartSequence.IsEnabled = (sender as RadioButton)?.Name == "RadioSequence";
         }
 
         private void Tags_OnTextChanged(object sender, TextChangedEventArgs e) {
-            if (e.Changes
-                .Select(change => (change.AddedLength > 0
-                                   && change.RemovedLength == 0)
-                                  || (change.AddedLength == 0
-                                      && change.RemovedLength >= 0)
-                                  ).Any(v => v)) {
+            if (!e.Changes.Select(change =>
+                    (change.AddedLength > 0 && change.RemovedLength == 0)
+                    || (change.AddedLength == 0 && change.RemovedLength >= 0)
+                ).Any(v => v)) {
+                return;
+            }
 
-                if (Settings.Default.FormatTags &&
-                    e.Changes
-                        .Select(change => change.AddedLength >= 0
-                                          && change.RemovedLength == 0
-                                          && change.Offset < this.Tags.Text.Length
-                                          && !this.Tags.Text.Substring(change.Offset, change.AddedLength)
-                                              .Contains(' '))
-                        .Any(v => v)) {
+            if (Settings.Default.FormatTags &&
+                e.Changes
+                    .Select(change => change.AddedLength >= 0
+                                      && change.RemovedLength == 0
+                                      && change.Offset < Tags.Text.Length
+                                      && !Tags.Text.Substring(change.Offset, change.AddedLength)
+                                          .Contains(' '))
+                    .Any(v => v)) {
 
-                    DoFormatTags();
-                }
+                DoFormatTags();
+            }
 
 
-                try {
-                    DoUpdateTagsState();
+            try {
+                DoUpdateTagsState();
 
-                    this.ErrorLabel.Content = String.Empty;
-                    this.Start.IsEnabled = true;
-                } catch (ImageTagParseException ex) {
-                    this.TagsBorder.BorderBrush = Brushes.Red;
-                    this.ErrorLabel.Content = ex.Message;
-                    this.Start.IsEnabled = false;
-                }
+                ErrorLabel.Content = String.Empty;
+                Start.IsEnabled = true;
+            } catch (ImageTagParseException ex) {
+                TagsBorder.BorderBrush = Brushes.Red;
+                ErrorLabel.Content = ex.Message;
+                Start.IsEnabled = false;
             }
         }
 

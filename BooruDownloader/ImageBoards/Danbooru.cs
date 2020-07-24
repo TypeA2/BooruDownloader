@@ -129,19 +129,16 @@ namespace BooruDownloader {
                 }
             }
         }
-        public override int MaxEntriesPerPage { get => 200; }
-        public override string ApiBaseEndpoint { get => "https://danbooru.donmai.us"; }
+        public override int MaxEntriesPerPage => 200;
+        public override string ApiBaseEndpoint => "https://danbooru.donmai.us";
 
-        public override Dictionary<string, string> Endpoints {
-            get {
-                return new Dictionary<string, string> {
-                    ["DMail"] = "/dmails.json",
-                    ["Users"] ="/users.json",
-                    ["Counts"] = "/counts/posts.json",
-                    ["Posts"] = "/posts.json"
-                };
-            }
-        }
+        public override Dictionary<string, string> Endpoints =>
+            new Dictionary<string, string> {
+                ["DMail"] = "/dmails.json",
+                ["Users"] ="/users.json",
+                ["Counts"] = "/counts/posts.json",
+                ["Posts"] = "/posts.json"
+            };
 
         public static void ClearAllCredentials() {
             Settings.Default.DanbooruUsername = string.Empty;

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Windows.Documents;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -115,6 +118,58 @@ namespace BooruDownloader.Base {
             return null;
         }
 
+        public string TaggedFileString() {
+            // danbooru:
+            // app/presenters/tag_set_presenter.rb:66 humanized_essential_tag_string
+            
+            // Rules:
+            // 5 character tags max ("{n - 5} more" if total number exceeds 5)
+            // 1 copyright tag, same rule when exceeded
+            // "drawn by {artist} if an artist is present
+
+            bool NotEmpty(string s) => !String.IsNullOrWhiteSpace(s);
+
+            string result = "";
+            if (!String.IsNullOrWhiteSpace(TagStringCharacter)) {
+                // I hope danbooru trims it right, but just to be sure
+                // First instance of "_(" denotes start of copyright part of character tag. Remove this part
+                IList<string> characters = TagStringCharacter.Split(' ').Where(NotEmpty).RemoveAfterFirst("_(");
+                if (characters.Count > 5) {
+                    result += String.Join(", ", characters.Take(5));
+                    result += $", and {characters.Count - 5} more";
+                } else {
+                    result += String.Join(", ", characters);
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(TagStringCopyright)) {
+                // Extra copyright description not needed
+                IList<string> copyrights = TagStringCopyright.Split(' ').Where(NotEmpty).RemoveAfterFirst("_(");
+
+                if (copyrights.Count > 1) {
+                    result += $" ({copyrights.First()} and {copyrights.Count - 1} more)";
+                } else {
+                    result += $" ({copyrights.First()})";
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(TagStringArtist)) {
+                List<string> artists = TagStringArtist.Split(' ').Where(NotEmpty).ToList();
+
+                result += $" drawn by {String.Join(", ", artists)}";
+            }
+
+            if (!String.IsNullOrWhiteSpace(result)) {
+                // Need separator
+                result += $"- {MD5}";
+            }
+            else {
+                result += MD5;
+            }
+
+            return result;
+        }
+
         public string Board { get; set; }
 
         [JsonProperty("id", Required = Required.Always)]
@@ -151,8 +206,8 @@ namespace BooruDownloader.Base {
         /// </summary>
         [JsonProperty("image_width", Required = Required.DisallowNull)]
         public long ImageWidth {
-            get { return Width; }
-            set { Width = value; }
+            get => Width;
+            set => Width = value;
         }
 
         /// <summary>
@@ -160,8 +215,8 @@ namespace BooruDownloader.Base {
         /// </summary>
         [JsonProperty("image_height", Required = Required.DisallowNull)]
         public long ImageHeight {
-            get { return Height; }
-            set { Height = value; }
+            get => Height;
+            set => Height = value;
         }
 
         /// <summary>
@@ -169,8 +224,8 @@ namespace BooruDownloader.Base {
         /// </summary>
         [JsonProperty("tag_string", Required = Required.DisallowNull)]
         public string TagString {
-            get { return Tags; }
-            set { Tags = value; }
+            get => Tags;
+            set => Tags = value;
         }
 
         [JsonProperty("file_ext", Required = Required.DisallowNull)]
@@ -194,8 +249,8 @@ namespace BooruDownloader.Base {
         /// </summary>
         [JsonProperty("creator_id", Required = Required.Default, NullValueHandling = NullValueHandling.Ignore)]
         public long CreatorID {
-            get { return UploaderID; }
-            set { UploaderID = value; }
+            get => UploaderID;
+            set => UploaderID = value;
         }
 
         // Gelbooru
@@ -204,9 +259,17 @@ namespace BooruDownloader.Base {
         /// </summary>
         [JsonProperty("hash", Required = Required.DisallowNull)]
         public string Hash {
-            get { return MD5; }
-            set { MD5 = value; }
+            get => MD5;
+            set => MD5 = value;
         }
         
+        [JsonProperty("tag_string_character", Required = Required.DisallowNull)]
+        public string TagStringCharacter { get; set; }
+
+        [JsonProperty("tag_string_copyright", Required = Required.DisallowNull)]
+        public string TagStringCopyright { get; set; }
+
+        [JsonProperty("tag_string_artist", Required = Required.DisallowNull)]
+        public string TagStringArtist { get; set; }
     }
 }

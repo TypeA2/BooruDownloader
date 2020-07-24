@@ -92,6 +92,17 @@ namespace BooruDownloader {
 
             return cap ? result.Where(e => e.Count <= n).ToList() : result.Where(e => e.Count == n).ToList();
         }
+
+        public static IList<string> RemoveAfterFirst(this IEnumerable<string> strings, string pattern, StringComparison comparison = StringComparison.Ordinal) {
+            List<string> copy = new List<string>(strings);
+            for (int i = 0; i < copy.Count; ++i) {
+                if (copy[i].Contains(pattern)) {
+                    copy[i] = copy[i].Substring(0, copy[i].IndexOf(pattern, comparison));
+                }
+            }
+
+            return copy;
+        }
     }
 }
 
