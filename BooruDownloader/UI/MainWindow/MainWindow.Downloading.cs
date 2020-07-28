@@ -34,11 +34,9 @@ namespace BooruDownloader {
 
             List<ImageTag> tags = ImageTag.ParseTags(Tags.Text) as List<ImageTag>;
 
-            TaggedImageBoard current_board = AvailableImageBoards[Source.SelectedIndex];
-
             ImageTag rating_tag = Post.RatingTag(CurrentRating());
 
-            if (!(await current_board.GetBestTags(tags, rating_tag) is List<ImageTag> best_tags)) {
+            if (!(await CurrentBoard.GetBestTags(tags, rating_tag) is List<ImageTag> best_tags)) {
                 DownloadFailed("Failed to get optimal tags");
                 return;
             }
@@ -50,11 +48,10 @@ namespace BooruDownloader {
 
             List<Post> posts;
             try {
-                posts = await current_board.GetPages(best_tags, tags,
+                posts = await CurrentBoard.GetPages(best_tags, tags,
                     CurrentRating(), -1, this) as List<Post>;
 
                 if (posts == null) {
-
                     ResetView("Download canceled");
                     return;
                 }
@@ -84,39 +81,67 @@ namespace BooruDownloader {
 
             await DownloadPosts(posts, output_base);
 
-            ResetView("Downloading finished");
+            ResetView($"Downloading {(CancelQueued ? "canceled" : "finished")}");
         }
 
         private async Task DownloadPosts(IList<Post> posts, string output_base) {
             long sequence_start = Int64.Parse(StartSequence.Text);
             bool skip_existing = OverwriteExisting.IsChecked == false;
 
-            _NewMaximum(posts.Count);
-
-            long file_marker = 0;
+            long already_received = 0;
             long total_received = 0;
             long total_size = posts.Sum(p => p.FileSize);
 
             void DownloadProgressHandler(object sender, DownloadProgressChangedEventArgs args) {
-                total_received = file_marker + args.BytesReceived;
+                // ReSharper disable once AccessToModifiedClosure
+                total_received = already_received + args.BytesReceived;
                 UpdateStats(total_received, total_size);
             }
 
-            WebHelper.Client.DownloadProgressChanged -= WebClientDownloadProgress;
-            WebHelper.Client.DownloadProgressChanged += DownloadProgressHandler;
+            Dictionary<string, long> post_counts = null;
+            if (RadioTaggedFilename.IsChecked == true) {
+                // If required, download tag counts
+                post_counts = new Dictionary<string, long>();
 
-            for (int i = 0; i < posts.Count; i++) {
-                if (CancelQueued) {
-                    ResetView("Download canceled");
-                    break;
+                foreach (Post post in posts) {
+                    // Only check these 2 types
+                    if (post.HasCharacterTags) {
+                        foreach (string tag in post.CharacterTags) {
+                            post_counts[tag] = 0;
+                        }
+                    }
+
+                    if (post.HasCopyrightTags) {
+                        foreach (string tag in post.CopyrightTags) {
+                            post_counts[tag] = 0;
+                        }
+                    }
                 }
 
-                file_marker = total_received;
+                List<string> keys = post_counts.Keys.ToList();
 
+                _NewMaximum(keys.Count);
+
+                for (int i = 0; i < keys.Count; ++i) {
+                    if (CancelQueued) {
+                        ResetView("Download canceled");
+                        return;
+                    }
+
+                    _SetStatus($"Getting post count for {keys[i]}");
+                    _Progress(i + 1);
+
+                    post_counts[keys[i]] = await CurrentBoard.PostCount(ImageTag.ParseTag(keys[i]));
+                    UpdateCounter();
+                }
+            }
+
+            // Pre-compute all file names
+            Dictionary<long, string> file_names = new Dictionary<long, string>();
+            for (int i = 0; i < posts.Count; ++i) {
                 Post post = posts[i];
 
                 string output_file = String.Empty;
-
                 string file_ext = String.IsNullOrWhiteSpace(post.FileExt)
                     ? Path.GetExtension(post.FileUrl)?.Substring(1)
                     : post.FileExt;
@@ -128,33 +153,53 @@ namespace BooruDownloader {
                 } else if (RadioSequence.IsChecked == true) {
                     output_file = $"{sequence_start + i}.{file_ext}";
                 } else if (RadioTaggedFilename.IsChecked == true) {
-                    output_file = $"{post.TaggedFileString()}.{file_ext}";
+                    output_file = $"{post.TaggedFileString(post_counts)}.{file_ext}";
                 }
 
                 if (output_file.Length == 0) {
                     WebHelper.Client.DownloadProgressChanged -= DownloadProgressHandler;
                     WebHelper.Client.DownloadProgressChanged += WebClientDownloadProgress;
-                    
+
                     throw new InvalidInputException($"Output path could not be formatted for {post.ID} from {post.Board}");
                 }
 
                 // Okay resharper is just showing off
                 output_file = Path.GetInvalidFileNameChars().Aggregate(output_file, (current, c) => current.Replace(c, '_'));
 
-                string output_path = $"{output_base}{Path.DirectorySeparatorChar}{output_file}";
+                file_names[post.ID] = output_file;
+            }
+
+            WebHelper.Client.DownloadProgressChanged -= WebClientDownloadProgress;
+            WebHelper.Client.DownloadProgressChanged += DownloadProgressHandler;
+
+            _NewMaximum(posts.Count);
+
+            for (int i = 0; i < posts.Count; i++) {
+                if (CancelQueued) {
+                    ResetView("Download canceled");
+                    break;
+                }
+
+                already_received = total_received;
+
+                Post post = posts[i];
+
+                // Enable the use of long paths
+                string output_path = $"\\\\?\\{output_base}{Path.DirectorySeparatorChar}{file_names[post.ID]}";
 
                 if (skip_existing
                     && File.Exists(output_path)) {
                     continue;
                 }
 
-                _SetStatus($"Downloading {output_file} ({post.ID})");
+                _SetStatus($"Downloading {file_names[post.ID]} ({post.ID})");
                 _Progress(i + 1);
 
                 try {
                     await WebHelper.Client.DownloadFileTaskAsync(post.FileUrl, output_path);
                 } catch (WebException e) {
-                    MessageBox.Show($"Download for {post.ID} failed with error: {e.Message}. Attempting to continue.");
+                    MessageBox.Show(
+                        $"Download for {post.ID} failed with error: {e.Message}.\nSource URL: \"{post.FileUrl}\"\nTarget file was: \"{output_path}\".\n Attempting to continue.");
                 }
 
                 UpdateCounter();

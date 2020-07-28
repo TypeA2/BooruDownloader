@@ -118,7 +118,7 @@ namespace BooruDownloader.Base {
             return null;
         }
 
-        public string TaggedFileString() {
+        public string TaggedFileString(Dictionary<string, long> counts) {
             // danbooru:
             // app/presenters/tag_set_presenter.rb:66 humanized_essential_tag_string
             
@@ -126,49 +126,60 @@ namespace BooruDownloader.Base {
             // 5 character tags max ("{n - 5} more" if total number exceeds 5)
             // 1 copyright tag, same rule when exceeded
             // "drawn by {artist} if an artist is present
-
-            bool NotEmpty(string s) => !String.IsNullOrWhiteSpace(s);
+            //
+            // First 2 are sorted by post count, descending
 
             string result = "";
-            if (!String.IsNullOrWhiteSpace(TagStringCharacter)) {
+            if (HasCharacterTags) {
                 // I hope danbooru trims it right, but just to be sure
                 // First instance of "_(" denotes start of copyright part of character tag. Remove this part
-                IList<string> characters = TagStringCharacter.Split(' ').Where(NotEmpty).RemoveAfterFirst("_(");
+                List<string> characters = CharacterTags.OrderByDescending(e => counts[e]).RemoveAfterFirst("_(")
+                    .Select(s => s.Replace('_', ' ')).ToList();
+
                 if (characters.Count > 5) {
-                    result += String.Join(", ", characters.Take(5));
-                    result += $", and {characters.Count - 5} more";
-                } else {
-                    result += String.Join(", ", characters);
+                    int count = characters.Count;
+                    characters = characters.Take(5).ToList();
+                    characters.Add($"{count - 5} more");
                 }
+
+                result += $"{characters.ToSentence()} ";
+
             }
 
-            if (!String.IsNullOrWhiteSpace(TagStringCopyright)) {
+            if (HasCopyrightTags) {
                 // Extra copyright description not needed
-                IList<string> copyrights = TagStringCopyright.Split(' ').Where(NotEmpty).RemoveAfterFirst("_(");
+                List<string> copyrights = CopyrightTags.OrderByDescending(e => counts[e]).RemoveAfterFirst("_(")
+                    .Select(s => s.Replace('_', ' ')).ToList();
 
                 if (copyrights.Count > 1) {
-                    result += $" ({copyrights.First()} and {copyrights.Count - 1} more)";
-                } else {
-                    result += $" ({copyrights.First()})";
+                    int count = copyrights.Count;
+                    copyrights = copyrights.Take(1).ToList();
+                    copyrights.Add($"{count - 1} more");
                 }
+
+                result += $"({copyrights.ToSentence()}) ";
             }
 
-            if (!String.IsNullOrWhiteSpace(TagStringArtist)) {
-                List<string> artists = TagStringArtist.Split(' ').Where(NotEmpty).ToList();
-
-                result += $" drawn by {String.Join(", ", artists)}";
+            if (HasArtistTags) {
+                // Artist tags aren't humanized?
+                result += $"drawn by {ArtistTags.ToSentence()} ";
             }
 
-            if (!String.IsNullOrWhiteSpace(result)) {
-                // Need separator
-                result += $"- {MD5}";
-            }
-            else {
-                result += MD5;
-            }
-
-            return result;
+            return NotEmpty(result) ? $"{result}- {MD5}" : MD5;
         }
+
+        private static bool NotEmpty(string s) => !String.IsNullOrWhiteSpace(s);
+
+        private static List<string> MakeTagList(string tags) => tags.Split(' ').Where(NotEmpty).ToList();
+
+        public List<string> CharacterTags => MakeTagList(TagStringCharacter);
+        public List<string> CopyrightTags => MakeTagList(TagStringCopyright);
+
+        public List<string> ArtistTags => MakeTagList(TagStringArtist).Where(e => e != "banned_artist").ToList();
+
+        public bool HasCharacterTags => NotEmpty(TagStringCharacter);
+        public bool HasCopyrightTags => NotEmpty(TagStringCopyright);
+        public bool HasArtistTags => NotEmpty(TagStringArtist);
 
         public string Board { get; set; }
 

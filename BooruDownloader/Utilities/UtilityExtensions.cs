@@ -93,7 +93,7 @@ namespace BooruDownloader {
             return cap ? result.Where(e => e.Count <= n).ToList() : result.Where(e => e.Count == n).ToList();
         }
 
-        public static IList<string> RemoveAfterFirst(this IEnumerable<string> strings, string pattern, StringComparison comparison = StringComparison.Ordinal) {
+        public static IEnumerable<string> RemoveAfterFirst(this IEnumerable<string> strings, string pattern, StringComparison comparison = StringComparison.Ordinal) {
             List<string> copy = new List<string>(strings);
             for (int i = 0; i < copy.Count; ++i) {
                 if (copy[i].Contains(pattern)) {
@@ -102,6 +102,21 @@ namespace BooruDownloader {
             }
 
             return copy;
+        }
+
+        public static string ToSentence(this IEnumerable<string> strings) {
+            // https://apidock.com/rails/Array/to_sentence
+            List<string> copy = strings.ToList();
+
+            switch (copy.Count) {
+                case 1: return copy.First();
+                case 2: return string.Join(" and ", copy);
+                default:
+                    string last = copy.Last();
+                    copy.RemoveAt(copy.Count - 1);
+
+                    return $"{string.Join(", ", copy)}, and {last}";
+            }
         }
     }
 }

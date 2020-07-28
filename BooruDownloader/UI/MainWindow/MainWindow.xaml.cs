@@ -17,6 +17,8 @@ namespace BooruDownloader {
                 .Select(t => (TaggedImageBoard) Activator.CreateInstance(t))
                 .ToList();
 
+        public TaggedImageBoard CurrentBoard => AvailableImageBoards[Source.SelectedIndex];
+
 
         private readonly Brush textbox_border;
 
